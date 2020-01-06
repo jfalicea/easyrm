@@ -1,10 +1,13 @@
 var express = require('express');
 var router = express.Router();
-//hash and salt passwords
+  //hash and salt passwords
 const bcrypt = require('bcryptjs')
-//generate unique tokens randomly
+  //generate unique tokens randomly
 const randToken = require('rand-token');
 const db = require('../db')
+
+
+
 /* GET users listing. */
 router.get('/', function(req, res, next) {
   res.send('respond with a resource');
@@ -37,7 +40,6 @@ router.post('/addUser', async (req, res, next)=>{
     const hash = bcrypt.hashSync(password, salt);
     const token = randToken.uid(50);
     const insertUser = await db.one(insertNewUserQuery,[fname, lname, email,token,hash])
-    console.log('++',insertUser)
     msg = "user added";
     res.json({
       fname,
@@ -79,11 +81,11 @@ router.post('/addUser', async (req, res, next)=>{
       })
       return
     } else{
-      msg = 'Either the email or PASSWORD, or both, are incorrect.  Error Code: 002'
+      msg = 'Either the email or PASSWORD, or both, are incorrect.  Error Code: LI002'
       res.json({msg})
     }
   }else{
-    msg = 'Either the EMAIL or password, or both, are incorrect. Error Code: 001'
+    msg = 'Either the EMAIL or password, or both, are incorrect. Error Code: LI001'
     res.json({msg})  
   }
 });
