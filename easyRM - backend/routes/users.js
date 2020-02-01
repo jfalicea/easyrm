@@ -5,12 +5,13 @@ const bcrypt = require('bcryptjs')
   //generate unique tokens randomly
 const randToken = require('rand-token');
 const db = require('../db')
-
+const userModel = require('../models/users')
 
 
 /* GET users listing. */
 router.get('/', function(req, res, next) {
-  res.send('respond with a resource');
+  userModel.addUser(req,res)
+  // res.send('respond with a resource');
 });
 
 router.post('/addUser', async (req, res, next)=>{
